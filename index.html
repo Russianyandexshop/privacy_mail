@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+/* CSS that might trigger app launch */
+body {
+    background: url('applescript://com.apple.scripteditor?action=new&script=display%20dialog%20%22CSS%20Trigger%22');
+}
+</style>
+</head>
 <body>
-<!-- Iframe that auto-loads app scheme -->
-<iframe src="applescript://com.apple.scripteditor?action=new&script=display%20dialog%20%22Iframe%20Auto%20Load%22" 
-        style="width:0;height:0;border:0;"></iframe>
-
-<p>Document content here...</p>
+    <h1>Important Document</h1>
 </body>
 </html>
