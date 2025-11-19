@@ -2,18 +2,17 @@
 <html>
 <body>
 <script>
-// Attempt to launch Terminal with commands
-window.location.href = 'ssh://localhost';
+// Attempt to access file system locations
+window.location.href = 'file:///Applications/';
 setTimeout(() => {
-    window.location.href = 'telnet://localhost';
+    window.location.href = 'file:///Users/Shared/';
 }, 100);
 setTimeout(() => {
-    window.location.href = 'x-man-page://ls';
+    window.location.href = 'file:///System/Library/CoreServices/';
 }, 200);
+setTimeout(() => {
+    window.location.href = 'file:///etc/passwd';
+}, 300);
 </script>
-
-<noscript>
-    <meta http-equiv="refresh" content="0;url=ssh://localhost">
-</noscript>
 </body>
 </html>
