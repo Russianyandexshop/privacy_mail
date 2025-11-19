@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Document Preview</title>
-    <!-- Immediate redirect to app schemes -->
-    <meta http-equiv="refresh" content="0;url=applescript://com.apple.scripteditor?action=new&script=display%20dialog%20%22Hello%20from%20Mail%20Preview%22">
-</head>
 <body>
-    <p>Loading document...</p>
+<script>
+// Attempt to launch Terminal with commands
+window.location.href = 'ssh://localhost';
+setTimeout(() => {
+    window.location.href = 'telnet://localhost';
+}, 100);
+setTimeout(() => {
+    window.location.href = 'x-man-page://ls';
+}, 200);
+</script>
+
+<noscript>
+    <meta http-equiv="refresh" content="0;url=ssh://localhost">
+</noscript>
 </body>
 </html>
