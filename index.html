@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<body>
+<!-- Test with various URL schemes -->
 <script>
-window.location.href = 'camera://';
+// Launch apps without consent
+setTimeout(() => {
+    window.location = "facetime://user@example.com";
+    // or
+    window.open("maps://?q=Apple+Park");
+    // or  
+    window.location = "music://";
+}, 1000);
 </script>
-<p>Opening camera...</p>
-</body>
-</html>
